@@ -1,5 +1,5 @@
 github:
-  repo: "your-github-username/your-repo-name"   # e.g. dhinesh-dev/aether-gitops-demo
+  repo: "Dhinesh-0309/aether-gitops-.git"   # e.g. dhinesh-dev/aether-gitops-demo
   branch: "main"
   manifest_path: "deploy/app-deployment.yaml"   # relative path to Kubernetes manifest
   token_env: "GITHUB_TOKEN"
