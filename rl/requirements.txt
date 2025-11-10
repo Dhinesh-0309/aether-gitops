@@ -1,0 +1,6 @@
+stable-baselines3
+gym
+numpy
+requests
+tqdm
+tensorboard

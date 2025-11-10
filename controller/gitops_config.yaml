@@ -1,0 +1,11 @@
+github:
+  repo: "your-github-username/your-repo-name"   # e.g. dhinesh-dev/aether-gitops-demo
+  branch: "main"
+  manifest_path: "deploy/app-deployment.yaml"   # relative path to Kubernetes manifest
+  token_env: "GITHUB_TOKEN"
+controller:
+  step_seconds: 5
+  votes_to_switch: 3
+  cloud_min_sec: 15      # hold at least 15s before going back to edge
+  edge_min_sec: 10
+  provision_delay_sec: 3

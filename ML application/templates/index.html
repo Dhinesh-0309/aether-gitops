@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patient Intake Screening 🏥</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body { 
+      font-family: 'Arial', sans-serif; 
+      background: linear-gradient(rgba(0, 123, 191, 0.85), rgba(0, 123, 191, 0.85)), 
+                  url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .hospital-header {
+      text-align: center;
+      margin-bottom: 30px;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .hospital-logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 15px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5em;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .hospital-name {
+      font-size: 1.8em;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .hospital-subtitle {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+    
+    .card { 
+      background: white; 
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      position: relative;
+      overflow: hidden;
+      animation: slideUp 0.6s ease-out;
+      border-top: 5px solid #007bbf;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -50px;
+      width: 100px;
+      height: 100px;
+      background: url('https://images.unsplash.com/photo-1551190822-a9333d879b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80') no-repeat center;
+      background-size: contain;
+      opacity: 0.05;
+      transform: rotate(15deg);
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .form-header {
+      text-align: center;
+      margin-bottom: 35px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e8f4f8;
+      position: relative;
+    }
+    
+    .form-header::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: #007bbf;
+    }
+    
+    h2 { 
+      color: #2c3e50; 
+      font-size: 2.2em;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .form-subtitle {
+      color: #6c757d;
+      font-size: 1.1em;
+      font-weight: 400;
+      margin-top: 10px;
+    }
+    
+    .medical-info {
+      background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      border-left: 4px solid #007bbf;
+    }
+    
+    .medical-info-title {
+      font-weight: 600;
+      color: #007bbf;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .medical-info-text {
+      color: #495057;
+      font-size: 0.95em;
+      line-height: 1.4;
+    }
+    
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+    
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    textarea { 
+      width: 100%; 
+      height: 140px; 
+      border: 2px solid #e1ecf4;
+      border-radius: 10px; 
+      padding: 18px; 
+      font-size: 16px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 120px;
+      transition: all 0.3s ease;
+      background: #fafbfc;
+      line-height: 1.5;
+    }
+    
+    textarea:focus {
+      outline: none;
+      border-color: #007bbf;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(0, 123, 191, 0.1);
+      transform: translateY(-1px);
+    }
+    
+    textarea::placeholder {
+      color: #adb5bd;
+      font-style: normal;
+    }
+    
+    .btn-container {
+      text-align: center;
+      margin-top: 35px;
+    }
+    
+    button { 
+      padding: 18px 45px; 
+      border-radius: 8px; 
+      background: linear-gradient(135deg, #007bbf 0%, #0056b3 100%);
+      color: white; 
+      border: none;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 123, 191, 0.3);
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 123, 191, 0.4);
+      background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+    }
+    
+    button:hover::before {
+      left: 100%;
+    }
+    
+    button:active {
+      transform: translateY(0px);
+    }
+    
+    .result { 
+      margin-top: 30px; 
+      padding: 25px; 
+      border-radius: 12px;
+      border-left: 5px solid;
+      animation: fadeIn 0.5s ease-out;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    
+    .result::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      background-size: contain;
+      opacity: 0.1;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .POSITIVE { 
+      background: linear-gradient(135deg, #d4edda, #c3e6cb); 
+      color: #155724;
+      border-left-color: #28a745;
+    }
+    
+    .POSITIVE::before {
+      background: url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') no-repeat center;
+    }
+    
+    .NEGATIVE { 
+      background: linear-gradient(135deg, #f8d7da, #f1b0b7); 
+      color: #721c24;
+      border-left-color: #dc3545;
+    }
+    
+    .NEGATIVE::before {
+      background: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80') no-repeat center;
+    }
+    
+    .result-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .result-icon {
+      font-size: 1.8em;
+      margin-right: 12px;
+      animation: bounce 1s ease-in-out;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+    
+    .result strong {
+      font-size: 1.2em;
+    }
+    
+    .confidence-section {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 8px;
+    }
+    
+    .confidence-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 5px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    
+    .confidence-fill {
+      height: 100%;
+      border-radius: 5px;
+      transition: width 1.5s ease-out;
+      animation: fillBar 1.5s ease-out;
+    }
+    
+    @keyframes fillBar {
+      from { width: 0; }
+    }
+    
+    .POSITIVE .confidence-fill {
+      background: linear-gradient(90deg, #28a745, #20c997);
+    }
+    
+    .NEGATIVE .confidence-fill {
+      background: linear-gradient(90deg, #dc3545, #e74c3c);
+    }
+    
+    .medical-footer {
+      margin-top: 30px;
+      padding: 20px;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #dee2e6;
+    }
+    
+    .medical-footer .disclaimer {
+      color: #6c757d;
+      font-size: 0.9em;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    
+    .emergency-notice {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    .emergency-notice strong {
+      color: #856404;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .card {
+        padding: 25px;
+      }
+      
+      h2 {
+        font-size: 1.6em;
+      }
+      
+      button {
+        width: 100%;
+        padding: 16px;
+      }
+      
+      .hospital-header {
+        margin-bottom: 20px;
+      }
+      
+      .hospital-name {
+        font-size: 1.4em;
+      }
+    }
+    
+    .loading {
+      opacity: 0.8;
+      pointer-events: none;
+    }
+    
+    .loading button {
+      position: relative;
+    }
+    
+    .loading button::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      margin: auto;
+      border: 3px solid transparent;
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    .medical-icons {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      opacity: 0.1;
+      font-size: 3em;
+      color: #007bbf;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hospital-header">
+      <div class="hospital-logo">🏥</div>
+      <div class="hospital-name">MedCare Regional Hospital</div>
+      <div class="hospital-subtitle">Patient Care & Medical Excellence</div>
+    </div>
+    
+    <div class="card">
+      <div class="medical-icons">⚕️</div>
+      
+      <div class="form-header">
+        <h2>🩺 Patient Intake Screening</h2>
+        <p class="form-subtitle">Preliminary Health Assessment System</p>
+      </div>
+      
+      <div class="medical-info">
+        <div class="medical-info-title">
+          📋 Important Medical Information
+        </div>
+        <div class="medical-info-text">
+          This screening tool helps our medical team prepare for your consultation. Please provide detailed information about your current symptoms, their duration, and severity level.
+        </div>
+      </div>
+      
+      <form method="post" id="screeningForm">
+        <div class="form-group">
+          <label class="form-label" for="symptoms">
+            🔍 Symptom Description & Medical History
+          </label>
+          <textarea 
+            id="symptoms"
+            name="text" 
+            placeholder="Please describe your current symptoms in detail:&#10;&#10;• When did symptoms first appear?&#10;• How severe are they (1-10 scale)?&#10;• Any triggers or patterns you've noticed?&#10;• Current medications or treatments?&#10;• Any relevant medical history?&#10;&#10;The more detailed information you provide, the better we can assist you..." 
+            required
+          ></textarea>
+        </div>
+        
+        <div class="btn-container">
+          <button type="submit">🔬 Begin Medical Analysis</button>
+        </div>
+      </form>
+
+      {% if result %}
+        <div class="result {{ result }}">
+          <div class="result-header">
+            <span class="result-icon">
+              {% if result == 'POSITIVE' %}✅{% else %}⚠️{% endif %}
+            </span>
+            <div>
+              <strong>Medical Assessment Result:</strong> {{ result }}
+            </div>
+          </div>
+          
+          <div class="confidence-section">
+            <strong>Clinical Confidence Level:</strong> {{ score }}%
+            <div class="confidence-bar">
+              <div class="confidence-fill" style="width: {{ score }}%;"></div>
+            </div>
+          </div>
+          
+          {% if result == 'POSITIVE' %}
+          <div style="margin-top: 15px; padding: 10px; background: rgba(40,167,69,0.1); border-radius: 6px;">
+            <strong>📞 Next Steps:</strong> Please schedule an appointment with our medical staff for further evaluation and treatment recommendations.
+          </div>
+          {% else %}
+          <div style="margin-top: 15px; padding: 10px; background: rgba(220,53,69,0.1); border-radius: 6px;">
+            <strong>🏥 Recommendation:</strong> Based on this preliminary assessment, we recommend immediate consultation with a healthcare professional.
+          </div>
+          {% endif %}
+        </div>
+      {% endif %}
+      
+      <div class="medical-footer">
+        <div class="disclaimer">
+          <strong>⚕️ Medical Disclaimer:</strong> This automated screening tool provides preliminary assessment only. It does not replace professional medical diagnosis or treatment. Always consult qualified healthcare providers for medical concerns.
+        </div>
+        
+        <div class="emergency-notice">
+          <strong>🚨 Emergency Notice:</strong> If you're experiencing a medical emergency, please call 911 or visit your nearest emergency room immediately.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Form submission with medical loading animation
+    document.getElementById('screeningForm').addEventListener('submit', function(e) {
+      const form = e.target;
+      const button = form.querySelector('button');
+      const originalText = button.innerHTML;
+      
+      // Add loading state
+      form.classList.add('loading');
+      button.innerHTML = '🔬 Analyzing Medical Data...';
+      
+      // Simulate processing time (remove in production)
+      setTimeout(() => {
+        // In production, this would be handled by your Flask backend
+        form.classList.remove('loading');
+        button.innerHTML = originalText;
+      }, 3000);
+    });
+    
+    // Enhanced character counter with medical context
+    const textarea = document.getElementById('symptoms');
+    const maxLength = 1000; // Increased for medical details
+    
+    const counter = document.createElement('div');
+    counter.style.cssText = `
+      text-align: right; 
+      font-size: 0.85em; 
+      color: #6c757d; 
+      margin-top: 8px;
+      padding: 5px 10px;
+      background: #f8f9fa;
+      border-radius: 5px;
+      border: 1px solid #e9ecef;
+    `;
+    textarea.parentNode.appendChild(counter);
+    
+    function updateCounter() {
+      const remaining = maxLength - textarea.value.length;
+      const percentage = (textarea.value.length / maxLength) * 100;
+      counter.innerHTML = `
+        📝 ${textarea.value.length}/${maxLength} characters
+        <br><small>More details help our medical team provide better care</small>
+      `;
+      
+      if (remaining < 100) {
+        counter.style.borderColor = '#dc3545';
+        counter.style.color = '#dc3545';
+      } else if (remaining < 200) {
+        counter.style.borderColor = '#ffc107';
+        counter.style.color = '#856404';
+      } else {
+        counter.style.borderColor = '#e9ecef';
+        counter.style.color = '#6c757d';
+      }
+    }
+    
+    textarea.addEventListener('input', updateCounter);
+    textarea.setAttribute('maxlength', maxLength);
+    updateCounter();
+    
+    // Add floating medical animation
+    function createFloatingMedicalIcon() {
+      const icons = ['🩺', '💊', '🏥', '⚕️', '🔬'];
+      const icon = document.createElement('div');
+      icon.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+      icon.style.cssText = `
+        position: fixed;
+        font-size: 20px;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.1;
+        animation: float 10s linear infinite;
+      `;
+      
+      icon.style.left = Math.random() * 100 + '%';
+      icon.style.top = '100%';
+      
+      const keyframes = `
+        @keyframes float {
+          0% { transform: translateY(0) rotate(0deg); }
+          100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+      `;
+      
+      if (!document.querySelector('#float-animation')) {
+        const style = document.createElement('style');
+        style.id = 'float-animation';
+        style.innerHTML = keyframes;
+        document.head.appendChild(style);
+      }
+      
+      document.body.appendChild(icon);
+      
+      setTimeout(() => {
+        icon.remove();
+      }, 10000);
+    }
+    
+    // Create floating icons periodically
+    setInterval(createFloatingMedicalIcon, 3000);
+  </script>
+</body>
+</html>

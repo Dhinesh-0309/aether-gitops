@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis
+    networks:
+      - aether-net
+    ports:
+      - "6379:6379"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    networks:
+      - aether-net
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    networks:
+      - aether-net
+    ports:
+      - "9100:9100"
+
+networks:
+  aether-net:
+    external: true

@@ -1,0 +1,13 @@
+requests
+redis
+joblib
+scikit-learn
+requests
+numpy
+torch
+stable-baselines3
+psutil
+gymnasium
+PyYAML
+PyGithub
+python-dotenv

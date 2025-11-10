@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-app
+  labels:
+    app: ml-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ml-app
+  template:
+    metadata:
+      labels:
+        app: ml-app
+    spec:
+      nodeSelector:
+        location: edge   # <-- This is what the controller will modify!
+      containers:
+        - name: ml-app
+          image: your-dockerhub-username/ml-application:latest
+          ports:
+            - containerPort: 5000
