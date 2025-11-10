@@ -15,9 +15,9 @@ spec:
         app: ml-app
     spec:
       nodeSelector:
-        location: edge   # <-- This is what the controller will modify!
+        location: cloud
       containers:
-        - name: ml-app
-          image: dhineshpandian/ml-application:latest
-          ports:
-            - containerPort: 5000
+      - name: ml-app
+        image: dhineshpandian/ml-application:latest
+        ports:
+        - containerPort: 5000
