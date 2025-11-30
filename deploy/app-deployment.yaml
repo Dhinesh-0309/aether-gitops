@@ -18,6 +18,6 @@ spec:
         location: edge   # <-- This is what the controller will modify!
       containers:
         - name: ml-app
-          image: your-dockerhub-username/ml-application:latest
+          image: dhineshpandian/ml-application:latest
           ports:
             - containerPort: 5000
