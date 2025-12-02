@@ -15,7 +15,7 @@ spec:
         app: ml-app
     spec:
       nodeSelector:
-        location: edge
+        location: cloud
       containers:
       - name: ml-app
         image: dhineshpandian/runtime-app:latest
